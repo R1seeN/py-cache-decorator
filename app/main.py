@@ -5,14 +5,16 @@ def cache(func: Callable) -> Callable:
     data = {}
 
     def wrapper(*args, **kwargs) -> Any:
-        if data.get(args) is None:
+        information = data.get((args, tuple(kwargs.items())))
+
+        if information is None:
             print("Calculating new result")
             result = func(*args, **kwargs)
-            data[args] = result
+            data[(args, tuple(kwargs.items()))] = result
 
             return result
         else:
             print("Getting from cache")
 
-        return data.get(args)
+        return information
     return wrapper
