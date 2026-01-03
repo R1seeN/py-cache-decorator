@@ -5,7 +5,7 @@ def cache(func: Callable) -> Callable:
     data = {}
 
     def wrapper(*args, **kwargs) -> Any:
-        information = data.get((args, tuple(kwargs.items())))
+        information = data.get((args, tuple(sorted(kwargs.items()))))
 
         if information is None:
             print("Calculating new result")
